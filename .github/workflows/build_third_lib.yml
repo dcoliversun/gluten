@@ -18,7 +18,7 @@ on:
       hadoop:
         description: 'Hadoop version: 2.7.4, 3.2.0, 3.2.2, 3.3.1, 3.3.3 or 3.3.6'
         required: true
-        default: '3.3.3'l
+        default: '3.3.3'
 
 jobs:
   build-script-test:
