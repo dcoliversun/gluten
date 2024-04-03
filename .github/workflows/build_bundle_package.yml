@@ -146,6 +146,13 @@ jobs:
           export MAVEN_HOME=/usr/lib/maven && \
           export PATH=${PATH}:${MAVEN_HOME}/bin && \
           mvn clean install -P${{ github.event.inputs.spark }} -Dhadoop.version=${{ github.event.inputs.hadoop }} -Pbackends-velox -Prss -DskipTests -Dmaven.source.skip
+      - name: Upload result
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: gluten-result
+          path: shims/spark32/scalastyle-output.xml
+          retention-days: 7
       - name: Upload bundle package
         uses: actions/upload-artifact@v2
         with:
