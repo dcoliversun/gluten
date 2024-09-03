@@ -87,6 +87,40 @@ class VeloxWindowExpressionSuite extends WholeStageTransformerSuite {
     ) {}
   }
 
+  test("1") {
+    runAndCompare(
+      """
+        |SELECT row_number() OVER (PARTITION BY o_orderdate ORDER BY o_orderdate) FROM orders;
+        |""".stripMargin
+    ) {}
+  }
+
+  test("2") {
+    runAndCompare(
+      """
+        |SELECT
+        | min(o_orderkey) OVER (PARTITION BY o_orderdate ORDER BY o_orderdate, o_totalprice)
+        |FROM orders;
+        |""".stripMargin
+    ) {}
+  }
+
+  test("3") {
+    runAndCompare(
+      """
+        |SELECT
+        | *
+        |FROM (
+        | SELECT
+        |  row_number() over(partition by o_orderstatus order by o_orderkey, o_orderstatus) as rn,
+        |  *
+        | from orders
+        |)
+        |WHERE rn = 1;
+        |""".stripMargin
+    ) {}
+  }
+
   test("collect_list / collect_set") {
     withTable("t") {
       val data = Seq(
