@@ -121,7 +121,7 @@ class VeloxRasSuite extends SharedSparkSession {
   }
 
   test("test") {
-    assert(1 == 2)
+    assert(1 == 3)
   }
 
   test("User cost model") {
